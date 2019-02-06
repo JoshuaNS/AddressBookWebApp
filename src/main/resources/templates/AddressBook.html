@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AddressBook</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th> Name </th>
+        <th> Address </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${buddyInfoList.empty}">
+        <td colspan="2"> No BuddyInfos Available </td>
+    </tr>
+    <tr th:each="bi : ${buddyInfoList}">
+        <td><span th:text="${bi.name}"> Name </span></td>
+        <td><span th:text="${bi.address}"> Address </span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
