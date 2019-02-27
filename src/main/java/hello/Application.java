@@ -17,7 +17,6 @@ public class Application {
         SpringApplication.run(Application.class);
     }
 
-
     @Bean
     public CommandLineRunner demo(BuddyInfoRepository repository) {
         return (args) -> {

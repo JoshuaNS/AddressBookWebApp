@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 @Controller
-public class BuddyInfoController {
+public class  BuddyInfoController {
 
     @ResponseBody
     @GetMapping("/book")
