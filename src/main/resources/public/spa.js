@@ -43,15 +43,14 @@
 //
 $(document).ready(function() {
     $.ajax({
-        url: "http://localhost:8080/AddressBook",
+        type:"GET",
+        url: "/AddressBook",
         dataType: 'json'
     }).then(function(data) {
-        console.log(data);
-
-        console.log(data._embedded.AddressBook);
         var book = data._embedded.AddressBook;
 
         var table = document.createElement("table");
+        table.setAttribute("id", "table1");
 
         var tr = table.insertRow(-1);
 
@@ -67,25 +66,47 @@ $(document).ready(function() {
 
         // JSON as rows
         for (var i = 0; i < book.length; i++) {
-            addCell(table, book[i])
+            tr = table.insertRow(-1);
+            tr.insertCell(-1).innerHTML = book[i].name;
+            tr.insertCell(-1).innerHTML = book[i].address;
+            tr.insertCell(-1).innerHTML = book[i].phoneNumber;
         }
 
-        $.each(book, function(k, buddyInfo) {
-            console.log(buddyInfo.name);
-            console.log(buddyInfo.address);
-            console.log(buddyInfo.phoneNumber);
 
-        });
 
         var divContainer = document.getElementById("showData");
         divContainer.innerHTML = "";
         divContainer.appendChild(table);
 
     });
+    $("#submitBuddy").click( function() {
+        var name = document.getElementById("nameInput").value;
+        var address = document.getElementById("addressInput").value;
+        var phoneNumber = document.getElementById("phoneInput").value;
+        var buddyInfo = {
+            "name":name,
+            "address":address,
+            "phoneNumber":phoneNumber
+        };
+
+        $.ajax({
+            type: "POST",
+            url:"/AddressBook",
+            contentType:"application/json",
+            dataType: "json",
+            data: JSON.stringify(buddyInfo),
+            success:function(data) {setTimeout(function () {addCell(data)}, 50)}
+        });
+
+        return false;
+    })
+
 
 });
 
-addCell = function(table, buddyInfo) {
+addCell = function(buddyInfo) {
+    var table = $("#table1")[0];
+
     tr = table.insertRow(-1);
     tr.insertCell(-1).innerHTML = buddyInfo.name;
     tr.insertCell(-1).innerHTML = buddyInfo.address;
